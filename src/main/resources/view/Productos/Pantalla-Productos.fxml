@@ -71,6 +71,7 @@
                     <TableColumn fx:id="colStock" text="Stock" prefWidth="80"/>
                     <TableColumn fx:id="colStatus" text="Estado" prefWidth="80"/>
                     <TableColumn fx:id="colEditar" text="Editar" prefWidth="80"/>
+                    <TableColumn fx:id="colEliminar" text="Eliminar" prefWidth="80"/>
                 </columns>
             </TableView>
         </VBox>

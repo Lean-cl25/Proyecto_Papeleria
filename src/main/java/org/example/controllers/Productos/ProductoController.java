@@ -42,6 +42,7 @@ public class ProductoController {
 
     @FXML private Button btnAgregar;
     @FXML private TableColumn<Productos, Void> colEditar;
+    @FXML private TableColumn<Productos, Void> colEliminar;
 
     private ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
 
@@ -112,6 +113,29 @@ public class ProductoController {
                 }
             }
         });
+
+        colEliminar.setCellFactory(param -> new TableCell<>() {
+            private final Button btnEliminar = new Button("🗑️");
+
+            {
+                btnEliminar.setStyle("-fx-background-color: #DC3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;");
+                btnEliminar.setOnAction(event -> {
+                    Productos producto = getTableView().getItems().get(getIndex());
+                    desactivarProducto(producto);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnEliminar);
+                }
+            }
+        });
+
 
 
         // Cargar productos desde la base de datos
@@ -237,6 +261,41 @@ public class ProductoController {
             alert.showAndWait();
         }
     }
+
+    private void desactivarProducto(Productos producto) {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirmar eliminación");
+        confirm.setHeaderText("¿Deseas eliminar este producto?");
+        confirm.setContentText("Producto: " + producto.getNombre());
+
+        if (confirm.showAndWait().get() == ButtonType.OK) {
+            String query = "UPDATE Productos SET status = 0 WHERE id_producto = " + producto.getIdProducto();
+
+            try (Connection conn = Conexion.getConnection();
+                 Statement stmt = conn.createStatement()) {
+
+                int filas = stmt.executeUpdate(query);
+                if (filas > 0) {
+                    Alert info = new Alert(Alert.AlertType.INFORMATION);
+                    info.setHeaderText("Producto eliminado correctamente");
+                    info.showAndWait();
+                    cargarProductosDesdeDB(); // recarga la tabla
+                } else {
+                    Alert error = new Alert(Alert.AlertType.ERROR);
+                    error.setHeaderText("No se pudo eliminado el producto");
+                    error.showAndWait();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setHeaderText("Error al inactivar producto");
+                error.setContentText(e.getMessage());
+                error.showAndWait();
+            }
+        }
+    }
+
 
 
 
