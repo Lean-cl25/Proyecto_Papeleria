@@ -1,0 +1,19 @@
+.text-field.text-field-error,
+.text-area.text-field-error {
+    -fx-border-color: red !important;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+}
+
+.text-field, .text-area {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #ccc;
+    -fx-padding: 5 10 5 10;
+}
+
+.btn {
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2,0,0,1);
+}

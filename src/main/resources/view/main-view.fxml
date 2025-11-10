@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.MainController">
+
+    <top>
+        <Label text="📚 Sistema de Papelería"
+               style="-fx-font-size: 24; -fx-font-weight: bold; -fx-padding: 20;"
+               BorderPane.alignment="CENTER" />
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Button text="🛒 Ventas"
+                    fx:id="btnVentas"
+                    prefWidth="220"
+                    prefHeight="64"
+                    style="-fx-font-size: 16;"
+                    onAction="#onVentasPressed" />
+
+            <Button text="📦 Stock"
+                    fx:id="btnStock"
+                    prefWidth="220"
+                    prefHeight="64"
+                    style="-fx-font-size: 16;"
+                    onAction="#onStockPressed" />
+        </VBox>
+    </center>
+</BorderPane>

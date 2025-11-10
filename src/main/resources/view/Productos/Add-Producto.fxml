@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.Productos.AddProductosController"
+            prefWidth="500" prefHeight="650"
+            stylesheets="/styles.css">
+
+    <center>
+        <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 25; -fx-background-color: #f4f4f4; -fx-border-radius: 10; -fx-background-radius: 10;">
+
+            <!-- Título -->
+            <Label text="Agregar nuevo producto" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+            <!-- Contenedor para los campos con sombra -->
+            <VBox spacing="12" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5,0,0,2);">
+
+                <TextField fx:id="txtCodigoBarras" promptText="Código de barras"/>
+                <TextField fx:id="txtNombre" promptText="Nombre del producto"/>
+                <TextArea fx:id="txtDescripcion" promptText="Descripción" prefRowCount="3"/>
+
+                <HBox spacing="10">
+                    <TextField fx:id="txtPrecioCompra" promptText="Precio de compra"/>
+                    <TextField fx:id="txtPrecioVenta" promptText="Precio de venta"/>
+                </HBox>
+
+                <TextField fx:id="txtStock" promptText="Stock inicial"/>
+
+                <!-- Imagen -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="txtImagen" promptText="Ruta de la imagen" editable="false" HBox.hgrow="ALWAYS"/>
+                    <Button text="Seleccionar" fx:id="btnSeleccionarImagen"/>
+                </HBox>
+
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <ImageView fx:id="imgPreview" fitWidth="120" fitHeight="120" preserveRatio="true" smooth="true" style="-fx-border-color: #ccc; -fx-border-radius: 5;"/>
+                    <Button text="Eliminar imagen" fx:id="btnEliminarImagen" style="-fx-background-color: #e53935; -fx-text-fill: white;"/>
+                </VBox>
+
+                <HBox spacing="10">
+                    <ComboBox fx:id="cbCategoria" promptText="Seleccione categoría" HBox.hgrow="ALWAYS"/>
+                    <ComboBox fx:id="cbProveedor" promptText="Seleccione proveedor" HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+            </VBox>
+
+            <!-- Botones Guardar y Cancelar -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="btnGuardar" text="💾 Guardar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+                <Button fx:id="btnCancelar" text="❌ Cancelar" style="-fx-background-color: #E53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+            </HBox>
+
+        </VBox>
+    </center>
+</BorderPane>

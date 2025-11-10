@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.Productos.ProductoController">
+
+    <!-- 🔹 BARRA LATERAL IZQUIERDA -->
+    <left>
+        <VBox spacing="10"
+              style="-fx-background-color: #e6e6e6;
+                     -fx-pref-width: 180;
+                     -fx-border-color: #cccccc;
+                     -fx-border-width: 0 1 0 0;">
+            <padding>
+                <Insets top="20" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Label text="Menú"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <Button text="🏠 Inicio" maxWidth="Infinity"/>
+            <Button text="📦 Productos" maxWidth="Infinity"/>
+            <Button text="📂 Categorías" maxWidth="Infinity"/>
+            <Button text="🚚 Proveedores" maxWidth="Infinity"/>
+            <Button text="⚙️ Configuración" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <!-- 🔹 BARRA SUPERIOR -->
+    <top>
+        <HBox alignment="CENTER_RIGHT"
+              style="-fx-background-color: #f2f2f2;
+                     -fx-border-color: #cccccc;
+                     -fx-border-width: 0 0 1 0;">
+            <padding>
+                <Insets top="15" right="25" bottom="15" left="15"/>
+            </padding>
+
+            <Region HBox.hgrow="ALWAYS"/> <!-- empuja el botón a la derecha -->
+
+            <Button fx:id="btnAgregar"
+                    text="+ Agregar Producto"
+                    style="-fx-background-color: #0078D7;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-padding: 8 16 8 16;
+                           -fx-background-radius: 8;"/>
+        </HBox>
+    </top>
+
+    <!-- 🔹 TABLA PRINCIPAL -->
+    <center>
+        <VBox>
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <TableView fx:id="tableProductos" prefWidth="800" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="colImagen" text="Imagen" prefWidth="100"/>
+                    <TableColumn fx:id="colCodigo" text="Código" prefWidth="100"/>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="150"/>
+                    <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="120"/>
+                    <TableColumn fx:id="colProveedor" text="Proveedor" prefWidth="120"/>
+                    <TableColumn fx:id="colPrecioVenta" text="Precio Venta" prefWidth="100"/>
+                    <TableColumn fx:id="colStock" text="Stock" prefWidth="80"/>
+                    <TableColumn fx:id="colStatus" text="Estado" prefWidth="80"/>
+                    <TableColumn fx:id="colEditar" text="Editar" prefWidth="80"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+</BorderPane>
