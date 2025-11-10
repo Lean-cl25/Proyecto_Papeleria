@@ -17,25 +17,22 @@ public class NavbarController {
         cambiarPantalla(event, "/view/main-view.fxml");
     }
 
-    /*@FXML
+    @FXML
     void abrirProductos(ActionEvent event) {
-        cambiarPantalla(event, "/view/Productos/Producto.fxml");
+        cambiarPantalla(event, "/view/Productos/Pantalla-Productos.fxml");
     }
 
     @FXML
     void abrirCategorias(ActionEvent event) {
-        cambiarPantalla(event, "/view/Categorias/Categoria.fxml");
+        cambiarPantalla(event, "/view/Categorias/Pantalla-Categorias.fxml");
     }
 
     @FXML
     void abrirProveedores(ActionEvent event) {
-        cambiarPantalla(event, "/view/Proveedores/Proveedor.fxml");
+        cambiarPantalla(event, "/view/Proveedores/Pantalla-Proveedores.fxml");
     }
 
-    @FXML
-    void abrirConfiguracion(ActionEvent event) {
-        cambiarPantalla(event, "/view/Configuracion.fxml");
-    }*/
+
 
     private void cambiarPantalla(ActionEvent event, String fxml) {
         try {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.Ventas.VentasController">
+
+    <top>
+        <Label text="Pantalla de Ventas" style="-fx-font-size: 20; -fx-padding: 10;" />
+    </top>
+
+    <center>
+        <Label text="Has ingresado correctamente a la pantalla de ventas."
+               style="-fx-font-size: 16; -fx-text-fill: green; -fx-padding: 20;" />
+    </center>
+
+</BorderPane>

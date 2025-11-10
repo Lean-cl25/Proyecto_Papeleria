@@ -20,7 +20,7 @@
            style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
     <Button text="🏠 Inicio" onAction="#MenuPrincipal" maxWidth="Infinity"/>
-    <Button text="📦 Productos"  maxWidth="Infinity"/>
-    <Button text="📂 Categorías"  maxWidth="Infinity"/>
-    <Button text="🚚 Proveedores"  maxWidth="Infinity"/>
+    <Button text="📦 Productos" onAction="#abrirProductos" maxWidth="Infinity"/>
+    <Button text="📂 Categorías" onAction="#abrirCategorias" maxWidth="Infinity"/>
+    <Button text="🚚 Proveedores" onAction="#abrirProveedores" maxWidth="Infinity"/>
 </VBox>

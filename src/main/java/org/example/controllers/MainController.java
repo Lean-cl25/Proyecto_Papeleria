@@ -14,7 +14,7 @@ public class MainController {
 
     @FXML
     void onVentasPressed(ActionEvent event) {
-        cambiarPantalla(event, "/view/Ventas/pantalla-ventas.fxml");
+        cambiarPantalla(event, "/view/Ventas/Pantalla-Ventas.fxml");
     }
 
     @FXML
