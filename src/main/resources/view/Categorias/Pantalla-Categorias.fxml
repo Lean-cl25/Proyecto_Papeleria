@@ -5,7 +5,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controllers.Ventas.VentasController">
+            fx:controller="org.example.controllers.Categorias.CategoriaController">
     <!-- 🔹 BARRA LATERAL IZQUIERDA -->
     <left>
         <fx:include source="/view/Navbar.fxml"/>

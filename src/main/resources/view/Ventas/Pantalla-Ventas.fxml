@@ -2,18 +2,38 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.controllers.Ventas.VentasController">
 
     <top>
-        <Label text="Pantalla de Ventas" style="-fx-font-size: 20; -fx-padding: 10;" />
+        <HBox spacing="10" style="-fx-padding: 15; -fx-background-color: #f4f4f4;">
+            <Label text="Código de barras:"/>
+            <TextField fx:id="txtCodigoBarras" promptText="Escanea o ingresa el código" onAction="#onCodigoEnter"/>
+            <Button text="🔍 Buscar producto" onAction="#onBuscarProducto"/>
+        </HBox>
     </top>
 
     <center>
-        <Label text="Has ingresado correctamente a la pantalla de ventas."
-               style="-fx-font-size: 16; -fx-text-fill: green; -fx-padding: 20;" />
+        <VBox spacing="10" style="-fx-padding: 20;">
+            <TableView fx:id="tableVenta" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="colCodigo" text="Código" prefWidth="100"/>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
+                    <TableColumn fx:id="colPrecio" text="Precio" prefWidth="100"/>
+                    <TableColumn fx:id="colCantidad" text="Cantidad" prefWidth="80"/>
+                    <TableColumn fx:id="colTotal" text="Total" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label text="Total:" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblTotal" text="0.00" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                <Button text="💾 Finalizar venta" style="-fx-background-color: #0078D7; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
     </center>
 
 </BorderPane>
