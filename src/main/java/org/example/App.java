@@ -13,9 +13,10 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         // Carga la vista principal
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Papelería - Sistema de Ventas");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
 
         // Inicia la conexión a la base de datos desde aquí

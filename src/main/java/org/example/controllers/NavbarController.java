@@ -37,16 +37,21 @@ public class NavbarController {
         cambiarPantalla(event, "/view/Configuracion.fxml");
     }*/
 
-    private void cambiarPantalla(ActionEvent event, String fxmlPath) {
+    private void cambiarPantalla(ActionEvent event, String fxml) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
+
+            // 🔹 Guarda el tamaño actual antes de cambiar la escena
+            double ancho = stage.getWidth();
+            double alto = stage.getHeight();
+
+            Scene nuevaScene = new Scene(root, ancho, alto);
+            stage.setScene(nuevaScene);
+            stage.setMaximized(true); // asegura que siga maximizado
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

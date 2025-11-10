@@ -23,5 +23,4 @@
     <Button text="📦 Productos"  maxWidth="Infinity"/>
     <Button text="📂 Categorías"  maxWidth="Infinity"/>
     <Button text="🚚 Proveedores"  maxWidth="Infinity"/>
-    <Button text="⚙️ Configuración"  maxWidth="Infinity"/>
 </VBox>
