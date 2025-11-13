@@ -17,6 +17,10 @@ public class Productos {
     private Categorias categoria;
     private Proveedores proveedor;
 
+    // Campos extra para el control de venta
+    private int cantidad = 1;
+    private BigDecimal total;
+
     // 🔹 Constructor vacío
     public Productos() {}
 
@@ -125,6 +129,23 @@ public class Productos {
 
     public void setProveedor(Proveedores proveedor) {
         this.proveedor = proveedor;
+    }
+
+    // Getters y setters
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     // 🔹 toString()
