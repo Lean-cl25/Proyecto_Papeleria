@@ -13,6 +13,8 @@
             <Label text="Código de barras:"/>
             <TextField fx:id="txtCodigoBarras" promptText="Escanea o ingresa el código" onAction="#onCodigoEnter"/>
             <Button text="🔍 Buscar producto" onAction="#onBuscarProducto"/>
+            <Button text="🏠 Inicio" onAction="#MenuPrincipal" maxWidth="Infinity"/>
+
         </HBox>
     </top>
 
