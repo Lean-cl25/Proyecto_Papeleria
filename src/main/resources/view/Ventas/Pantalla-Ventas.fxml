@@ -6,38 +6,81 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controllers.Ventas.VentasController">
+            fx:controller="org.example.controllers.Ventas.VentasController"
+            stylesheets="@/styles.css">
 
+    <!-- 🔵 BARRA SUPERIOR -->
     <top>
-        <HBox spacing="10" style="-fx-padding: 15; -fx-background-color: #f4f4f4;">
-            <Label text="Código de barras:"/>
-            <TextField fx:id="txtCodigoBarras" promptText="Escanea o ingresa el código" onAction="#onCodigoEnter"/>
-            <Button text="🔍 Buscar producto" onAction="#onBuscarProducto"/>
-            <Button text="🏠 Inicio" onAction="#MenuPrincipal" maxWidth="Infinity"/>
+        <HBox spacing="15" alignment="CENTER_LEFT"
+              style="-fx-padding: 18; -fx-background-color: linear-gradient(to right, #1976D2, #2196F3);">
 
+            <Label text="Código de barras:"
+                   style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+
+            <TextField fx:id="txtCodigoBarras"
+                       promptText="Escanea o ingresa el código"
+                       onAction="#onCodigoEnter"
+                       style="-fx-background-radius: 8; -fx-padding: 8;"/>
+
+            <Button text="🔍 Buscar producto"
+                    onAction="#onBuscarProducto"
+                    style="-fx-background-color: white; -fx-text-fill: #1976D2; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Button text="🏠 Inicio"
+                    onAction="#MenuPrincipal"
+                    style="-fx-background-color: #ffffff55; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
         </HBox>
     </top>
 
+    <!-- 🟢 CONTENIDO CENTRAL -->
     <center>
-        <VBox spacing="10" style="-fx-padding: 20;">
-            <TableView fx:id="tableVenta" prefHeight="400">
+        <VBox spacing="15" style="-fx-padding: 20;">
+
+            <!-- TABLA DE PRODUCTOS -->
+            <TableView fx:id="tableVenta" prefHeight="420"
+                       style="-fx-background-color: white;
+                  -fx-background-radius: 12;
+                  -fx-border-color: #c7c7c7;
+                  -fx-border-radius: 12;
+                  -fx-padding: 4;
+                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0.1, 0, 2);">
+
                 <columns>
-                    <TableColumn fx:id="colCodigo" text="Código" prefWidth="100"/>
+                    <TableColumn fx:id="colCodigo" text="Código" prefWidth="120"/>
                     <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
-                    <TableColumn fx:id="colPrecio" text="Precio" prefWidth="100"/>
-                    <TableColumn fx:id="colCantidad" text="Cantidad" prefWidth="80"/>
-                    <TableColumn fx:id="colTotal" text="Total" prefWidth="100"/>
-                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="100"/> <!-- 👈 NUEVA -->
+                    <TableColumn fx:id="colPrecio" text="Precio" prefWidth="100" styleClass="col-num"/>
+                    <TableColumn fx:id="colCantidad" text="Cantidad" prefWidth="80" styleClass="col-num"/>
+                    <TableColumn fx:id="colTotal" text="Total" prefWidth="120" styleClass="col-num"/>
+                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="120"/>
                 </columns>
             </TableView>
 
-            <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Label text="Monto en Efectivo" style="-fx-font-weight: bold;"/>
-                <TextField promptText="Monto en Efectivo"/>
-                <Label text="Total:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblTotal" text="0.00" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-                <Button text="💾 Finalizar venta" style="-fx-background-color: #0078D7; -fx-text-fill: white;"/>
+            <!-- 🔴 PIE DE VENTA -->
+            <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 10;">
+
+                <Label text="Monto en Efectivo" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+
+                <TextField fx:id="txtEfectivo" promptText="Monto en Efectivo"
+                           style="-fx-background-radius: 8; -fx-padding: 8;"/>
+
+                <Label text="Total:" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+                <Label fx:id="lblTotal"
+                       text="0.00"
+                       style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #D32F2F;"/>
+
+                <Button text="💾 Finalizar venta"
+                        onAction="#onFinalizarVenta"
+                        style="-fx-background-color: #4CAF50;
+                               -fx-text-fill: white;
+                               -fx-font-weight: bold;
+                               -fx-font-size: 14px;
+                               -fx-background-radius: 10;
+                               -fx-padding: 10 18;"/>
             </HBox>
+
         </VBox>
     </center>
 

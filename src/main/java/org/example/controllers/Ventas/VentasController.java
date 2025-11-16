@@ -34,6 +34,9 @@ public class VentasController {
     @FXML private TableColumn<Productos, BigDecimal> colTotal;
     @FXML private TableColumn<Productos, Void> colAcciones; // nueva columna para botones
     @FXML private Label lblTotal;
+    @FXML private TextField txtEfectivo;
+
+
 
     private ObservableList<Productos> listaVenta = FXCollections.observableArrayList();
 
@@ -170,9 +173,10 @@ public class VentasController {
 
             BuscarProductoController controller = loader.getController();
             controller.setVentasController(this);
+            Scene scene = new Scene(root, 810, 600); // tamaño de la ventana modal
 
             Stage modal = new Stage();
-            modal.setScene(new Scene(root));
+            modal.setScene(scene);
             modal.initModality(Modality.APPLICATION_MODAL);
             modal.setTitle("Buscar producto");
             modal.showAndWait();
@@ -181,6 +185,82 @@ public class VentasController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void onFinalizarVenta(ActionEvent event) {
+        if (listaVenta.isEmpty()) {
+            mostrarAlerta("Venta vacía", "No hay productos en la venta.");
+            return;
+        }
+
+        BigDecimal totalVenta = new BigDecimal(lblTotal.getText().replace("$", ""));
+        BigDecimal montoEfectivo = BigDecimal.ZERO;
+
+        boolean pagoEnEfectivo = false;
+
+        try {
+            if (!txtEfectivo.getText().trim().isEmpty()) {
+                montoEfectivo = new BigDecimal(txtEfectivo.getText().trim());
+                pagoEnEfectivo = montoEfectivo.compareTo(BigDecimal.ZERO) > 0;
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Monto en efectivo inválido.");
+            return;
+        }
+
+        // 🔹 Si paga en efectivo, calcular vuelto
+        if (pagoEnEfectivo) {
+            if (montoEfectivo.compareTo(totalVenta) < 0) {
+                mostrarAlerta("Efectivo insuficiente", "El monto recibido no cubre la venta.");
+                return;
+            }
+
+            BigDecimal vuelto = montoEfectivo.subtract(totalVenta);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Vuelto");
+            alert.setHeaderText("Vuelto para el cliente");
+            alert.setContentText("Debe devolver: €" + vuelto);
+            alert.showAndWait();
+        }
+
+        // 🔹 Actualizar stock en base de datos
+        actualizarStockBD();
+
+        // 🔹 Limpiar la venta
+        listaVenta.clear();
+        tableVenta.refresh();
+        txtEfectivo.clear();
+        lblTotal.setText("0.00");
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Venta completada");
+        alert.setHeaderText(null);
+        alert.setContentText("La venta se ha completado correctamente.");
+        alert.showAndWait();
+    }
+
+
+    private void actualizarStockBD() {
+        String sql = "UPDATE productos SET stock_actual = stock_actual - ? WHERE id_producto = ?";
+
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            for (Productos p : listaVenta) {
+                stmt.setInt(1, p.getCantidad());
+                stmt.setInt(2, p.getIdProducto());
+                stmt.addBatch();
+            }
+
+            stmt.executeBatch();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error BD", "Ocurrió un error al actualizar el stock.");
+        }
+    }
+
 
     // 🔹 Mostrar alerta
     private void mostrarAlerta(String titulo, String mensaje) {
