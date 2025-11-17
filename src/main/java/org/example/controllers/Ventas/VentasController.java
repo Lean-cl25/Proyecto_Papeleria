@@ -62,11 +62,19 @@ public class VentasController {
             {
                 btnMas.setOnAction(event -> {
                     Productos producto = getTableView().getItems().get(getIndex());
+
+                    if (producto.getCantidad() >= producto.getStockActual()) {
+                        mostrarAlerta("Stock insuficiente",
+                                "Solo hay " + producto.getStockActual() + " unidades disponibles.");
+                        return;
+                    }
+
                     producto.setCantidad(producto.getCantidad() + 1);
                     producto.setTotal(producto.getPrecioVenta().multiply(BigDecimal.valueOf(producto.getCantidad())));
                     tableVenta.refresh();
                     calcularTotal();
                 });
+
 
                 btnMenos.setOnAction(event -> {
                     Productos producto = getTableView().getItems().get(getIndex());
@@ -111,7 +119,15 @@ public class VentasController {
     // 🔹 Agregar producto (sin duplicar, incrementa cantidad)
     public void agregarProductoTabla(Productos producto) {
         for (Productos p : listaVenta) {
+            // mismo producto
             if (p.getCodigoBarras().equals(producto.getCodigoBarras())) {
+                // 🔴 Si ya está y NO queda stock disponible → bloquear
+                if (p.getCantidad() >= p.getStockActual()) {
+                    mostrarAlerta("Stock insuficiente",
+                            "Solo hay " + p.getStockActual() + " unidades disponibles.");
+                    return;
+                }
+                // ✔ Sí hay stock → aumentar cantidad
                 p.setCantidad(p.getCantidad() + 1);
                 p.setTotal(p.getPrecioVenta().multiply(BigDecimal.valueOf(p.getCantidad())));
                 tableVenta.refresh();
@@ -120,7 +136,12 @@ public class VentasController {
             }
         }
 
-        // Si no existe, agregar nuevo
+        // 🟩 2️⃣ Si el producto NO está en la tabla: validar stock
+        if (producto.getStockActual() <= 0) {
+            mostrarAlerta("Sin stock", "Este producto no tiene unidades disponibles.");
+            return;
+        }
+        // ✔ Sí hay stock → agregar nuevo producto
         producto.setCantidad(1);
         producto.setTotal(producto.getPrecioVenta());
         listaVenta.add(producto);
@@ -294,4 +315,18 @@ public class VentasController {
             e.printStackTrace();
         }
     }
+
+    public void agregarProductoDesdeModal(Productos pModal) {
+
+        // Recargar el producto REAL desde la base de datos
+        Productos producto = buscarProductoPorCodigo(pModal.getCodigoBarras());
+
+        if (producto == null) {
+            mostrarAlerta("Error", "No se pudo cargar el producto desde la base de datos.");
+            return;
+        }
+
+        agregarProductoTabla(producto);
+    }
+
 }

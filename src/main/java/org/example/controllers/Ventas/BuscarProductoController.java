@@ -62,6 +62,8 @@ public class BuscarProductoController {
                 p.setNombre(rs.getString("nombre"));
                 p.setPrecioVenta(rs.getBigDecimal("precio_venta"));
                 p.setImagen(rs.getString("imagen"));
+                p.setStockActual(rs.getInt("stock_actual"));
+
 
                 contenedorTarjetas.getChildren().add(crearTarjeta(p));
             }
@@ -118,7 +120,7 @@ public class BuscarProductoController {
         );
 
         btn.setOnAction(e -> {
-            ventasController.agregarProductoTabla(p);
+            ventasController.agregarProductoDesdeModal(p);
             txtBuscar.getScene().getWindow().hide();
         });
 
