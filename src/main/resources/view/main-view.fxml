@@ -4,32 +4,44 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
+<?import javafx.scene.text.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controllers.MainController">
-
-    <top>
-        <Label text="📚 Sistema de Papelería"
-               style="-fx-font-size: 24; -fx-font-weight: bold; -fx-padding: 20;"
-               BorderPane.alignment="CENTER" />
-    </top>
+            fx:controller="org.example.controllers.MainController"
+            stylesheets="@/styles.css"
+            styleClass="root-pane">
 
     <center>
-        <VBox alignment="CENTER" spacing="20">
-            <Button text="🛒 Ventas"
-                    fx:id="btnVentas"
-                    prefWidth="220"
-                    prefHeight="64"
-                    style="-fx-font-size: 16;"
-                    onAction="#onVentasPressed" />
+        <VBox alignment="CENTER" spacing="0" styleClass="buttons-container">
+            <!-- Título dentro del recuadro -->
+            <Label text="Sistema de Papelería" styleClass="container-title"/>
 
-            <Button text="📦 Stock"
-                    fx:id="btnStock"
-                    prefWidth="220"
-                    prefHeight="64"
-                    style="-fx-font-size: 16;"
-                    onAction="#onStockPressed" />
+            <HBox alignment="CENTER" spacing="40" styleClass="buttons-row">
+                <!-- Botón de Ventas -->
+                <VBox alignment="CENTER" spacing="10" styleClass="square-button-container">
+                    <Button fx:id="btnVentas"
+                            onAction="#onVentasPressed"
+                            styleClass="square-menu-button">
+                        <graphic>
+                            <Label text="🛒" styleClass="button-icon"/>
+                        </graphic>
+                    </Button>
+                    <Label text="Ventas" styleClass="button-label"/>
+                </VBox>
+
+                <!-- Botón de Stock -->
+                <VBox alignment="CENTER" spacing="10" styleClass="square-button-container">
+                    <Button fx:id="btnStock"
+                            onAction="#onStockPressed"
+                            styleClass="square-menu-button-green">
+                        <graphic>
+                            <Label text="📦" styleClass="button-icon"/>
+                        </graphic>
+                    </Button>
+                    <Label text="Stock" styleClass="button-label"/>
+                </VBox>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>
