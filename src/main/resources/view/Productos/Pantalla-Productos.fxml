@@ -5,9 +5,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controllers.Productos.ProductoController">
+            fx:controller="org.example.controllers.Productos.ProductoController"
+            stylesheets="@/styles.css">
 
     <!-- 🔹 BARRA LATERAL IZQUIERDA -->
     <left>
@@ -38,26 +41,63 @@
 
     <!-- 🔹 TABLA PRINCIPAL -->
     <center>
-        <VBox>
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
+        <VBox spacing="10" alignment="TOP_CENTER">
 
-            <TableView fx:id="tableProductos" prefWidth="800" prefHeight="400">
-                <columns>
-                    <TableColumn fx:id="colImagen" text="Imagen" prefWidth="100"/>
-                    <TableColumn fx:id="colCodigo" text="Código" prefWidth="100"/>
-                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="150"/>
-                    <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="120"/>
-                    <TableColumn fx:id="colProveedor" text="Proveedor" prefWidth="120"/>
-                    <TableColumn fx:id="colPrecioVenta" text="Precio Venta" prefWidth="100"/>
-                    <TableColumn fx:id="colStock" text="Stock" prefWidth="80"/>
-                    <TableColumn fx:id="colStatus" text="Estado" prefWidth="80"/>
-                    <TableColumn fx:id="colEditar" text="Editar" prefWidth="80"/>
-                    <TableColumn fx:id="colEliminar" text="Eliminar" prefWidth="80"/>
-                </columns>
-            </TableView>
+            <!-- 🔹 Filtros -->
+            <HBox spacing="15"
+                  alignment="CENTER_LEFT"
+                  styleClass="filtro-panel">
+
+                <!-- Buscar -->
+                <TextField fx:id="txtBuscar"
+                           promptText="🔍 Buscar producto..."
+                           prefWidth="220"
+                           styleClass="filtro-textfield"/>
+
+                <!-- Categoría -->
+                <ComboBox fx:id="cbCategoria"
+                          promptText="📂 Categoría"
+                          prefWidth="200"
+                          styleClass="filtro-combobox"/>
+
+                <!-- Ordenar -->
+                <ComboBox fx:id="cbOrdenar"
+                          prefWidth="180"
+                          styleClass="filtro-combobox">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Stock ascendente"/>
+                            <String fx:value="Stock descendente"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+                <!-- Mostrar agotados -->
+                <CheckBox fx:id="chkAgotados"
+                          text="🔴 Mostrar agotados"
+                          styleClass="filtro-check"/>
+            </HBox>
+
+
+            <!-- 🔹 Contenedor de tarjetas -->
+            <ScrollPane fitToWidth="true"
+                        style="-fx-background-color: transparent;"
+                        VBox.vgrow="ALWAYS">
+                <content>
+                    <FlowPane fx:id="contenedorTarjetas"
+                              hgap="20" vgap="20"
+                              prefWidth="800"
+                              styleClass="card-flow">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                    </FlowPane>
+                </content>
+            </ScrollPane>
+
         </VBox>
     </center>
+
+
 
 </BorderPane>

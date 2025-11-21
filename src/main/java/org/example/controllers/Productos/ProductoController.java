@@ -5,7 +5,11 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.example.database.Conexion;
 import org.example.models.Categorias;
 import org.example.models.Productos;
@@ -24,124 +28,36 @@ import javafx.stage.Stage;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.TableColumn;
 
 
 public class ProductoController {
 
-    @FXML private TableView<Productos> tableProductos;
-    @FXML private TableColumn<Productos, String> colCodigo;
-    @FXML private TableColumn<Productos, String> colNombre;
-    @FXML private TableColumn<Productos, String> colCategoria;
-    @FXML private TableColumn<Productos, String> colProveedor;
-    @FXML private TableColumn<Productos, String> colPrecioVenta;
-    @FXML private TableColumn<Productos, Integer> colStock;
-    @FXML private TableColumn<Productos, String> colStatus;
-    @FXML private TableColumn<Productos, ImageView> colImagen;
-
+    @FXML private FlowPane contenedorTarjetas;
     @FXML private Button btnAgregar;
-    @FXML private TableColumn<Productos, Void> colEditar;
-    @FXML private TableColumn<Productos, Void> colEliminar;
+
+    @FXML private TextField txtBuscar;
+    @FXML private ComboBox<String> cbCategoria;
+    @FXML private ComboBox<String> cbOrdenar;
+    @FXML private CheckBox chkAgotados;
+
 
     private ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        // Configurar columnas
-        colCodigo.setCellValueFactory(cell -> new ReadOnlyStringWrapper(cell.getValue().getCodigoBarras()));
-        colNombre.setCellValueFactory(cell -> new ReadOnlyStringWrapper(cell.getValue().getNombre()));
 
-        // Mostrar nombre de la categoría
-        colCategoria.setCellValueFactory(cell ->
-                new ReadOnlyStringWrapper(
-                        cell.getValue().getCategoria() != null ? cell.getValue().getCategoria().getNombre() : ""
-                )
-        );
+        cargarProductosDesdeDB();
+        cargarCategoriasEnFiltro();
+        mostrarTarjetas();
 
-        // Mostrar nombre del proveedor
-        colProveedor.setCellValueFactory(cell ->
-                new ReadOnlyStringWrapper(
-                        cell.getValue().getProveedor() != null ? cell.getValue().getProveedor().getNombre() : ""
-                )
-        );
-
-        colPrecioVenta.setCellValueFactory(cell ->
-                new ReadOnlyStringWrapper(cell.getValue().getPrecioVenta().toString())
-        );
-        colStock.setCellValueFactory(cell ->
-                new ReadOnlyObjectWrapper<>(cell.getValue().getStockActual())
-        );
-        colStatus.setCellValueFactory(cell ->
-                new ReadOnlyStringWrapper(cell.getValue().getStatus() == 1 ? "Activo" : "Inactivo")
-        );
-
-        colImagen.setCellValueFactory(cell -> {
-            String ruta = cell.getValue().getImagen();
-            ImageView imageView = null;
-            if (ruta != null && !ruta.isEmpty()) {
-                try {
-                    Image img = new Image("file:" + ruta, 50, 50, true, true); // ancho 50, alto 50
-                    imageView = new ImageView(img);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return new ReadOnlyObjectWrapper<>(imageView);
-        });
+        txtBuscar.textProperty().addListener((o, oldV, newV) -> aplicarFiltros());
+        cbCategoria.valueProperty().addListener((o, oldV, newV) -> aplicarFiltros());
+        cbOrdenar.valueProperty().addListener((o, oldV, newV) -> aplicarFiltros());
+        chkAgotados.selectedProperty().addListener((o, oldV, newV) -> aplicarFiltros());
 
         btnAgregar.setOnAction(e -> AddProductos());
-
-        colEditar.setCellFactory(param -> new TableCell<>() {
-            private final Button btnEditar = new Button("✏️");
-
-            {
-                btnEditar.setStyle("-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;");
-                btnEditar.setOnAction(event -> {
-                    Productos producto = getTableView().getItems().get(getIndex());
-                    abrirVentanaEditar(producto);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btnEditar);
-                }
-            }
-        });
-
-        colEliminar.setCellFactory(param -> new TableCell<>() {
-            private final Button btnEliminar = new Button("🗑️");
-
-            {
-                btnEliminar.setStyle("-fx-background-color: #DC3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;");
-                btnEliminar.setOnAction(event -> {
-                    Productos producto = getTableView().getItems().get(getIndex());
-                    desactivarProducto(producto);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btnEliminar);
-                }
-            }
-        });
-
-
-
-        // Cargar productos desde la base de datos
-        cargarProductosDesdeDB();
-
-        tableProductos.setItems(listaProductos);
     }
+
 
     private void cargarProductosDesdeDB() {
         String query = "SELECT p.id_producto, p.codigo_barras, p.nombre, p.descripcion, " +
@@ -198,10 +114,13 @@ public class ProductoController {
                 );
 
                 listaProductos.add(producto);
+
             }
 
             rs.close();
             stmt.close();
+            mostrarTarjetas();
+
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -210,7 +129,127 @@ public class ProductoController {
             alert.setContentText(ex.getMessage());
             alert.showAndWait();
         }
+
     }
+
+    private void cargarCategoriasEnFiltro() {
+        cbCategoria.getItems().clear();
+        cbCategoria.getItems().add("Todas");
+
+        String query = "SELECT nombre FROM Categorias WHERE status = 1";
+
+        try (Connection conn = Conexion.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                cbCategoria.getItems().add(rs.getString("nombre"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        cbCategoria.getSelectionModel().selectFirst();
+    }
+
+    private void mostrarTarjetas() {
+        mostrarTarjetas(listaProductos);
+    }
+
+    private void mostrarTarjetas(ObservableList<Productos> lista) {
+        contenedorTarjetas.getChildren().clear();
+
+        for (Productos p : lista) {
+
+            VBox card = new VBox();
+            card.getStyleClass().add("product-card");
+            card.setSpacing(10);
+            card.setAlignment(Pos.CENTER);
+
+            // Imagen
+            ImageView imgView = new ImageView();
+            imgView.setFitWidth(140);
+            imgView.setFitHeight(140);
+            imgView.getStyleClass().add("card-image");
+
+            if (p.getImagen() != null && !p.getImagen().isEmpty()) {
+                try {
+                    imgView.setImage(new Image("file:" + p.getImagen()));
+                } catch (Exception e) {
+                    imgView.setImage(null);
+                }
+            }
+
+            Label nombre = new Label(p.getNombre());
+            nombre.getStyleClass().add("card-title");
+
+            Label categoria = new Label("Categoría: " +
+                    (p.getCategoria() != null ? p.getCategoria().getNombre() : "N/A"));
+            categoria.getStyleClass().add("card-sub");
+
+            Label stock = new Label("Stock: " + p.getStockActual());
+            stock.getStyleClass().add("card-sub");
+
+            HBox botones = new HBox();
+            botones.setAlignment(Pos.CENTER);
+            botones.getStyleClass().add("card-buttons");
+
+            Button btnEditar = new Button("Editar");
+            btnEditar.getStyleClass().add("btn-edit");
+            btnEditar.setOnAction(e -> abrirVentanaEditar(p));
+
+            Button btnEliminar = new Button("Eliminar");
+            btnEliminar.getStyleClass().add("btn-delete");
+            btnEliminar.setOnAction(e -> desactivarProducto(p));
+
+            botones.getChildren().addAll(btnEditar, btnEliminar);
+            card.getChildren().addAll(imgView, nombre, categoria, stock, botones);
+            contenedorTarjetas.getChildren().add(card);
+        }
+    }
+
+
+    private void aplicarFiltros() {
+
+        ObservableList<Productos> filtrados = FXCollections.observableArrayList(listaProductos);
+
+        // 🔍 Filtrar búsqueda
+        String texto = txtBuscar.getText().toLowerCase();
+        if (!texto.isEmpty()) {
+            filtrados.removeIf(p ->
+                    !p.getNombre().toLowerCase().contains(texto) &&
+                            !p.getCodigoBarras().toLowerCase().contains(texto)
+            );
+        }
+
+        // 📂 Filtrar categoría
+        String cat = cbCategoria.getValue();
+        if (cat != null && !cat.equals("Todas")) {
+            filtrados.removeIf(p ->
+                    p.getCategoria() == null ||
+                            !p.getCategoria().getNombre().equals(cat)
+            );
+        }
+
+        // 🔴 Mostrar agotados
+        if (chkAgotados.isSelected()) {
+            filtrados.removeIf(p -> p.getStockActual() > 0);
+        }
+
+        // 📉 Ordenar stock
+        if (cbOrdenar.getValue() != null) {
+            switch (cbOrdenar.getValue()) {
+                case "Stock ascendente" -> filtrados.sort((a, b) -> a.getStockActual() - b.getStockActual());
+                case "Stock descendente" -> filtrados.sort((a, b) -> b.getStockActual() - a.getStockActual());
+            }
+        }
+
+        // Mostrar resultados
+        mostrarTarjetas(filtrados);
+    }
+
+
 
     private void AddProductos() {
         try {

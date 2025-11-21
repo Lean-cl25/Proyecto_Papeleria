@@ -223,6 +223,147 @@
 }
 
 
+/* Contenedor de tarjetas */
+.card-flow {
+    -fx-background-color: transparent;
+}
+
+/* Tarjeta individual */
+.product-card {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-padding: 15;
+    -fx-pref-width: 220;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0.2, 0, 3);
+}
+
+.product-card:hover {
+    -fx-translate-y: -4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 18, 0.25, 0, 4);
+}
+
+/* Imagen del producto */
+.card-image {
+    -fx-background-radius: 10;
+}
+
+/* Nombre del producto */
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Descripción */
+.card-sub {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555;
+}
+
+/* Botonera */
+.card-buttons {
+    -fx-spacing: 12;
+}
+
+/* Botón editar */
+.btn-edit {
+    -fx-background-color: #FFA500;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+}
+
+/* Botón eliminar */
+.btn-delete {
+    -fx-background-color: #DC3545;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+}
+
+
+/* =====================================
+   PANEL CONTENEDOR DE FILTROS
+   ===================================== */
+.filtro-panel {
+    -fx-padding: 12;
+    -fx-background-color: rgba(255, 255, 255, 0.75);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: rgba(0,0,0,0.12);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0.15, 0, 2);
+}
+
+/* =====================================
+   CAMPOS DE TEXTO
+   ===================================== */
+.filtro-textfield {
+    -fx-padding: 8;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1;
+    -fx-background-color: white;
+    -fx-font-size: 14px;
+}
+
+.filtro-textfield:hover {
+    -fx-border-color: #1e88e5;
+}
+
+.filtro-textfield:focused {
+    -fx-border-color: #1e88e5;
+    -fx-effect: dropshadow(gaussian, rgba(30,136,229,0.3), 10, 0.3, 0, 0);
+}
+
+/* =====================================
+   COMBOBOX
+   ===================================== */
+.filtro-combobox {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1;
+    -fx-font-size: 14px;
+    -fx-padding: 4;
+}
+
+.filtro-combobox:hover {
+    -fx-border-color: #43a047;
+}
+
+.filtro-combobox:focused {
+    -fx-border-color: #43a047;
+    -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.3), 10, 0.3, 0, 0);
+}
+
+/* =====================================
+   CHECKBOX
+   ===================================== */
+.filtro-check {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.filtro-check:hover {
+    -fx-text-fill: #d32f2f;
+}
+
+/* Estilo del checkbox real */
+.filtro-check > .box {
+    -fx-background-color: white;
+    -fx-border-color: #bdbdbd;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.filtro-check:selected > .box {
+    -fx-background-color: #d32f2f;
+    -fx-border-color: #b71c1c;
+}
+
+
+
 
 
 
