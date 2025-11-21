@@ -12,49 +12,91 @@
             stylesheets="/styles.css">
 
     <center>
-        <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 25; -fx-background-color: #f4f4f4; -fx-border-radius: 10; -fx-background-radius: 10;">
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox spacing="20" alignment="TOP_CENTER" styleClass="form-container">
 
-            <!-- Título -->
-            <Label text="Agregar nuevo producto" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
-
-            <!-- Contenedor para los campos con sombra -->
-            <VBox spacing="12" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5,0,0,2);">
-
-                <TextField fx:id="txtCodigoBarras" promptText="Código de barras"/>
-                <TextField fx:id="txtNombre" promptText="Nombre del producto"/>
-                <TextArea fx:id="txtDescripcion" promptText="Descripción" prefRowCount="3"/>
-
-                <HBox spacing="10">
-                    <TextField fx:id="txtPrecioCompra" promptText="Precio de compra"/>
-                    <TextField fx:id="txtPrecioVenta" promptText="Precio de venta"/>
-                </HBox>
-
-                <TextField fx:id="txtStock" promptText="Stock inicial"/>
-
-                <!-- Imagen -->
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <TextField fx:id="txtImagen" promptText="Ruta de la imagen" editable="false" HBox.hgrow="ALWAYS"/>
-                    <Button text="Seleccionar" fx:id="btnSeleccionarImagen"/>
-                </HBox>
-
-                <VBox spacing="5" alignment="CENTER_LEFT">
-                    <ImageView fx:id="imgPreview" fitWidth="120" fitHeight="120" preserveRatio="true" smooth="true" style="-fx-border-color: #ccc; -fx-border-radius: 5;"/>
-                    <Button text="Eliminar imagen" fx:id="btnEliminarImagen" style="-fx-background-color: #e53935; -fx-text-fill: white;"/>
+                <!-- Título principal -->
+                <VBox spacing="5" alignment="CENTER" styleClass="title-section">
+                    <Label text="Agregar Nuevo Producto" styleClass="form-title"/>
+                    <Label text="Complete la información del producto" styleClass="form-subtitle"/>
                 </VBox>
 
-                <HBox spacing="10">
-                    <ComboBox fx:id="cbCategoria" promptText="Seleccione categoría" HBox.hgrow="ALWAYS"/>
-                    <ComboBox fx:id="cbProveedor" promptText="Seleccione proveedor" HBox.hgrow="ALWAYS"/>
+                <!-- Contenedor de campos del formulario -->
+                <VBox spacing="20" styleClass="form-fields-container">
+
+                    <!-- Sección: Información básica -->
+                    <VBox spacing="15" styleClass="form-section">
+                        <Label text="INFORMACIÓN BÁSICA" styleClass="section-label"/>
+
+                        <TextField fx:id="txtCodigoBarras" promptText="Código de barras" styleClass="modern-textfield"/>
+                        <TextField fx:id="txtNombre" promptText="Nombre del producto" styleClass="modern-textfield"/>
+                        <TextArea fx:id="txtDescripcion" promptText="Descripción del producto"
+                                  prefRowCount="3" wrapText="true" styleClass="modern-textarea"/>
+                    </VBox>
+
+                    <!-- Sección: Precios y Stock -->
+                    <VBox spacing="15" styleClass="form-section">
+                        <Label text="PRECIOS Y STOCK" styleClass="section-label"/>
+
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Precio de Compra" styleClass="field-label"/>
+                                <TextField fx:id="txtPrecioCompra" promptText="0.00" styleClass="modern-textfield"/>
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Precio de Venta" styleClass="field-label"/>
+                                <TextField fx:id="txtPrecioVenta" promptText="0.00" styleClass="modern-textfield"/>
+                            </VBox>
+                        </HBox>
+
+                        <VBox spacing="5">
+                            <Label text="Stock Inicial" styleClass="field-label"/>
+                            <TextField fx:id="txtStock" promptText="0" styleClass="modern-textfield"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Sección: Imagen -->
+                    <VBox spacing="15" styleClass="form-section">
+                        <Label text="IMAGEN DEL PRODUCTO" styleClass="section-label"/>
+
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <TextField fx:id="txtImagen" promptText="Ruta de la imagen"
+                                       editable="false" styleClass="image-path-field" HBox.hgrow="ALWAYS"/>
+                            <Button text="Seleccionar" fx:id="btnSeleccionarImagen" styleClass="secondary-button"/>
+                        </HBox>
+
+                        <VBox spacing="8" alignment="CENTER">
+                            <ImageView fx:id="imgPreview" fitWidth="120" fitHeight="120" preserveRatio="true"
+                                       smooth="true" styleClass="image-preview"/>
+                            <Button text="Eliminar imagen" fx:id="btnEliminarImagen" styleClass="danger-button"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Sección: Categoría y Proveedor -->
+                    <VBox spacing="15" styleClass="form-section">
+                        <Label text="CATEGORIZACIÓN" styleClass="section-label"/>
+
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Categoría" styleClass="field-label"/>
+                                <ComboBox fx:id="cbCategoria" promptText="Seleccione categoría" styleClass="modern-combobox"/>
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Proveedor" styleClass="field-label"/>
+                                <ComboBox fx:id="cbProveedor" promptText="Seleccione proveedor" styleClass="modern-combobox"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+
+                </VBox>
+
+                <!-- Botones de acción -->
+                <HBox spacing="15" alignment="CENTER" styleClass="buttons-container">
+                    <Button fx:id="btnCancelar" text="Cancelar" styleClass="cancel-button"/>
+                    <Button fx:id="btnGuardar" text="Guardar Producto" styleClass="primary-button"/>
                 </HBox>
 
             </VBox>
-
-            <!-- Botones Guardar y Cancelar -->
-            <HBox spacing="15" alignment="CENTER">
-                <Button fx:id="btnGuardar" text="💾 Guardar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
-                <Button fx:id="btnCancelar" text="❌ Cancelar" style="-fx-background-color: #E53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
-            </HBox>
-
-        </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>
