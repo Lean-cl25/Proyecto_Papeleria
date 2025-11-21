@@ -3,16 +3,39 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controllers.Categorias.CategoriaController">
+            fx:controller="org.example.controllers.Categorias.CategoriaController"
+            stylesheets="@/styles.css">
     <!-- 🔹 BARRA LATERAL IZQUIERDA -->
     <left>
         <fx:include source="/view/Navbar.fxml"/>
     </left>
 
+    <!-- 🔹 BARRA SUPERIOR -->
     <top>
-        <Label text="Pantalla de Categorias" style="-fx-font-size: 20; -fx-padding: 10;" />
+        <HBox alignment="CENTER" styleClass="top-bar-stock">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30"/>
+            </padding>
+
+            <!-- Título de la sección -->
+            <Label text="GESTIÓN DE CATEGORIAS" styleClass="section-title"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Botón principal con icono -->
+            <Button fx:id="btnAgregar"
+                    styleClass="modern-add-button">
+                <graphic>
+                    <HBox alignment="CENTER" spacing="8">
+                        <Label text="+" styleClass="plus-icon"/>
+                        <Label text="Agregar Producto" styleClass="button-text"/>
+                    </HBox>
+                </graphic>
+            </Button>
+        </HBox>
     </top>
 
     <center>

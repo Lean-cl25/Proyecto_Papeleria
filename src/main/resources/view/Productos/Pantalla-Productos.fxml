@@ -19,23 +19,26 @@
 
     <!-- 🔹 BARRA SUPERIOR -->
     <top>
-        <HBox alignment="CENTER_RIGHT"
-              style="-fx-background-color: #f2f2f2;
-                     -fx-border-color: #cccccc;
-                     -fx-border-width: 0 0 1 0;">
+        <HBox alignment="CENTER" styleClass="top-bar-stock">
             <padding>
-                <Insets top="15" right="25" bottom="15" left="15"/>
+                <Insets top="20" right="30" bottom="20" left="30"/>
             </padding>
 
-            <Region HBox.hgrow="ALWAYS"/> <!-- empuja el botón a la derecha -->
+            <!-- Título de la sección -->
+            <Label text="GESTIÓN DE PRODUCTOS" styleClass="section-title"/>
 
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Botón principal con icono -->
             <Button fx:id="btnAgregar"
-                    text="+ Agregar Producto"
-                    style="-fx-background-color: #0078D7;
-                           -fx-text-fill: white;
-                           -fx-font-weight: bold;
-                           -fx-padding: 8 16 8 16;
-                           -fx-background-radius: 8;"/>
+                    styleClass="modern-add-button">
+                <graphic>
+                    <HBox alignment="CENTER" spacing="8">
+                        <Label text="+" styleClass="plus-icon"/>
+                        <Label text="Agregar Producto" styleClass="button-text"/>
+                    </HBox>
+                </graphic>
+            </Button>
         </HBox>
     </top>
 

@@ -3,24 +3,56 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
 
-<VBox spacing="10"
+<VBox spacing="0"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.NavbarController"
-      style="-fx-background-color: #e6e6e6;
-             -fx-pref-width: 180;
-             -fx-border-color: #cccccc;
-             -fx-border-width: 0 1 0 0;">
-    <padding>
-        <Insets top="20" right="10" bottom="10" left="10"/>
-    </padding>
+      styleClass="modern-navbar">
 
-    <Label text="Menú"
-           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-    <Button text="🏠 Inicio" onAction="#MenuPrincipal" maxWidth="Infinity"/>
-    <Button text="📦 Productos" onAction="#abrirProductos" maxWidth="Infinity"/>
-    <Button text="📂 Categorías" onAction="#abrirCategorias" maxWidth="Infinity"/>
-    <Button text="🚚 Proveedores" onAction="#abrirProveedores" maxWidth="Infinity"/>
+
+    <!-- Botones de navegación -->
+    <VBox spacing="8" styleClass="nav-buttons-container">
+        <padding>
+            <Insets top="15" right="15" bottom="20" left="15"/>
+        </padding>
+
+        <Button text="Inicio" onAction="#MenuPrincipal" styleClass="nav-button">
+            <graphic>
+                <Label text="🏠" styleClass="nav-icon"/>
+            </graphic>
+        </Button>
+
+        <Button text="Productos" onAction="#abrirProductos" styleClass="nav-button">
+            <graphic>
+                <Label text="📦" styleClass="nav-icon"/>
+            </graphic>
+        </Button>
+
+        <Button text="Categorías" onAction="#abrirCategorias" styleClass="nav-button">
+            <graphic>
+                <Label text="📂" styleClass="nav-icon"/>
+            </graphic>
+        </Button>
+
+        <Button text="Proveedores" onAction="#abrirProveedores" styleClass="nav-button">
+            <graphic>
+                <Label text="🚚" styleClass="nav-icon"/>
+            </graphic>
+        </Button>
+    </VBox>
+
+    <!-- Espacio flexible para empujar contenido hacia arriba -->
+    <Region VBox.vgrow="ALWAYS"/>
+
+    <!-- Footer del navbar -->
+    <VBox styleClass="navbar-footer">
+        <padding>
+            <Insets top="15" right="15" bottom="15" left="15"/>
+        </padding>
+        <Separator styleClass="navbar-separator"/>
+        <Label text="Sistema Papelería v1.0" styleClass="footer-text"/>
+    </VBox>
 </VBox>
